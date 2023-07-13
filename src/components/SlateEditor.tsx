@@ -40,8 +40,8 @@ const SlateEditor: FC = () => {
       <Editable
         style={{
           background: 'white',
-          // width: '21cm',
-          // height: '29.7cm',
+          width: '21cm',
+          height: '29.7cm',
           display: 'block',
           margin: '0 auto',
           marginBottom: '0.5cm',
@@ -52,10 +52,9 @@ const SlateEditor: FC = () => {
         renderLeaf={renderLeaf}
         autoFocus
         spellCheck
-        onClick={e => {
+        onClick={() => {
           const selection = editor.selection;
           const node = getCurrentNode(editor, selection?.anchor.path?? []) as any as Element;
-          console.log(node)
           updateElementInfoState(node);
         }}
       />

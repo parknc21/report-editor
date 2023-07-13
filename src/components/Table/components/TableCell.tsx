@@ -4,6 +4,10 @@ import { css } from '@emotion/react';
 import TableCellResizableWrapper from "./TableCellResizableWrapper";
 import { TableElementModel } from "../../../core/models/EditorModels";
 import { TableStateContext } from "../../../core/providers/TableStateProvider";
+import { Editor } from "slate";
+import { useSlate } from "slate-react";
+import { getCurrentCellNode } from "../utils/getCurrentCellNode";
+import { TableToolbarState, TableToolbarStateType } from "../../../core/providers/TableToolbarStateProvider";
 
 const TableCell: FC<TableElementModel> = ({ 
   attributes, 
@@ -11,7 +15,9 @@ const TableCell: FC<TableElementModel> = ({
   colIndex,
   element
 }) => {
+  const editor: Editor = useSlate();
   const { tableState } = useContext(TableStateContext);
+  const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState)
   return (
     <td
       id={`table${tableState.tableIndex}-cell`}
@@ -22,6 +28,11 @@ const TableCell: FC<TableElementModel> = ({
         position: relative;
         height: 100%;
       `}
+      onClick={() => {
+        const selection = editor.selection;
+        const node = getCurrentCellNode(editor, selection?.anchor.path?? []) as any as Element;
+        updateTableToolbarState({ currentNode: node });
+      }}
     >
       <div
         css={css`

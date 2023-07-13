@@ -24,7 +24,7 @@ const SlateProvider: FC<PropsWithChildren> = ({ children }) => {
       initialValue={value}
       onChange={(e: any) => setValue(e)}
     >
-      {/* {JSON.stringify(value)} */}
+      {JSON.stringify(value)}
       {children}
     </Slate>
   )

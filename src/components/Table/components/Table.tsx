@@ -5,12 +5,15 @@ import { Transforms, Editor, Element } from "slate";
 import { useSlate } from "slate-react";
 import { TableElementModel } from "../../../core/models/EditorModels";
 import { TableStateContext, TableStateContextModel } from "../../../core/providers/TableStateProvider";
+import TableToolbar from "./TableToolbar/TableToolbar";
+import { ElementInfoContext, ElementInfoContextType } from "../../../core/providers/ElementInfoProvider";
 
 const Table: FC<PropsWithChildren<TableElementModel>> = ({
-  attributes, 
+  attributes,
   children 
 }) => {
   const { tableState } = useContext<TableStateContextModel>(TableStateContext);
+  const { elementInfoState } = useContext<ElementInfoContextType>(ElementInfoContext);
   const [ initialColSize, setInitialColSize ] = useState<number>();
   const editor: Editor = useSlate();
 
@@ -75,6 +78,7 @@ const Table: FC<PropsWithChildren<TableElementModel>> = ({
           {children}
         </tbody>
       </table>
+      { elementInfoState.type === "table" && elementInfoState.id === `table${tableState.tableIndex}` && <TableToolbar /> }
     </div> 
   )
 };

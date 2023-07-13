@@ -28,6 +28,7 @@ export interface HeadingElement {
 export interface ParagraphElement {
   type: 'paragraph' | 'list' | string;
   align?: TextAlign;
+  id?: string,
   children: CustomText[];
 };
 
@@ -53,6 +54,8 @@ export interface TableCellElement {
   colIndex?: string;
   align?: TextAlign;
   id?: string;
+  border?: boolean[];
+  readonly?: boolean;
   children: CustomText[];
 };
 
