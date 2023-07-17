@@ -50,7 +50,7 @@ export interface TableRowElement {
 };
 
 export interface TableCellElement {
-  type: 'td';
+  type: 'td' | string;
   colIndex?: string;
   align?: TextAlign;
   id?: string;
