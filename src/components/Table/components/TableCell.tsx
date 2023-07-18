@@ -19,7 +19,7 @@ const TableCell: FC<TableElementModel> = ({
   const editor: Editor = useSlate();
   const { tableState } = useContext(TableStateContext);
   const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
-  const [currentCell, setCurrentCell] = useState<TableCellElement>({type: "td", id: "", border: [true, true, true, true], readonly: false, children: [{ type: "p", children: [{ text: "" }]}]});
+  const [currentCell, setCurrentCell] = useState<TableCellElement>({type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]});
   
   useEffect(() => {
     const dom = document.getElementById(`table${tableState.tableIndex}-cell`);

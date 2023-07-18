@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { TableCellElement } from "../../../core/models/CustomEditor";
 import { Editor, Path, Transforms } from "slate";
 import { ReactEditor, useSlate } from "slate-react";
+import TableCellBorderHideCheckbox, { BorderHideStateType } from "./TableCellBorderHideCheckbox";
 
 interface TableCellSettingDialogProps {
   open: boolean;
@@ -22,6 +23,7 @@ const TableCellSettingDialog: FC<TableCellSettingDialogProps> = ({
 }) => {
   const editor: Editor = useSlate();
   const [state, setState] = useState<SettingStateType>({ readonly: false, cellId: "" });
+  const [borderState, setBorderState] = useState<BorderHideStateType>({ top: true, right: true, bottom: true, left: true });
   const handleSubmit = () => {
     handleClose();
     //设置单元格只读
@@ -37,12 +39,20 @@ const TableCellSettingDialog: FC<TableCellSettingDialogProps> = ({
       { id: state.cellId },
       { at: path }
     );
+    Transforms.setNodes(
+      editor,
+      { border: borderState },
+      { at: path }
+    );
   };
   const toggleReadonly = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, readonly: event.target.checked });
   };
   const cellIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setState({ ...state, cellId: event.target.value });
+  };
+  const transferBorderHideState = (state: BorderHideStateType) => {
+    setBorderState(state);
   };
   return (
     <Dialog 
@@ -72,17 +82,37 @@ const TableCellSettingDialog: FC<TableCellSettingDialogProps> = ({
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid container>
+              <Grid item xs={12} sm={6} sx={{ textAlign: "left" }}>
                 <FormControlLabel
                   control={
-                    <Switch
-                      checked={state.readonly}
-                      name="readonly"
-                      onChange={toggleReadonly}
+                    <Switch 
+                      checked={state.readonly} 
+                      onChange={toggleReadonly} 
+                      name="readonly" 
                     />
                   }
                   label="只读"
+                  labelPlacement="start"
+                  sx={{
+                    marginLeft: 0
+                  }}
+                />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={12} sx={{ textAlign: "left" }}>
+                <FormControlLabel
+                  control={
+                    <TableCellBorderHideCheckbox 
+                      transferBorderHideState={transferBorderHideState}
+                    />
+                  }
+                  label="边框"
+                  labelPlacement="start"
+                  sx={{
+                    marginLeft: 0
+                  }}
                 />
               </Grid>
             </Grid>

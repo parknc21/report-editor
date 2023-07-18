@@ -14,7 +14,7 @@ import { ToolbarStateContext, ToolbarStateContextType } from "../../../core/prov
 
 interface ConfigTableDialogModel {
   open: boolean;
-  onClose: () => void;
+  handleClose: () => void;
 };
 
 interface tableRowsAndColumnsModel {
@@ -24,7 +24,7 @@ interface tableRowsAndColumnsModel {
 
 const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
   open,
-  onClose
+  handleClose
 }) => {
   const editor: Editor = useSlate();
   const [ tableRowsAndColumns, setTableRowsAndColumns ] = useState<tableRowsAndColumnsModel>({ rowCount: 4, colCount: 4 });
@@ -32,7 +32,7 @@ const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
   const { updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
 
   const cancelCreateTable = () => {
-    onClose();
+    handleClose();
   };
   const confirmCreateTable = () => {
     const tableArray = editor.children.filter(item => item.type === "table");
@@ -48,13 +48,13 @@ const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
     insertTable(insertProps);
     // MyEditor.insertNodeEnd(editor);
     updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
-    onClose();
+    handleClose();
   };
   return (
     <>
       <Dialog
         open={open}
-        onClose={onClose}
+        onClose={handleClose}
         disableEscapeKeyDown={true}
       >
         <DialogTitle>创建表格</DialogTitle>
@@ -91,7 +91,7 @@ const ConfigTableDialog: FC<ConfigTableDialogModel> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={cancelCreateTable}>取消</Button>
-          <Button onClick={confirmCreateTable} autoFocus>确认</Button>
+          <Button onClick={confirmCreateTable}>确认</Button>
         </DialogActions>
       </Dialog>
     </>

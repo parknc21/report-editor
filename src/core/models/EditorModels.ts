@@ -36,3 +36,17 @@ export interface TableElementModel {
   width?: number,
   children: any
 };
+
+export interface ImageAreaElementModel {
+  attributes: {
+    'data-slate-node': 'element';
+    'data-slate-inline'?: true;
+    'data-slate-void'?: true;
+    dir?: 'rtl';
+    ref: any;
+  },
+  colIndex?: number,
+  element?: Element,
+  width?: number,
+  children: any
+};

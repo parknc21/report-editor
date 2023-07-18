@@ -10,7 +10,7 @@ export interface TableToolbarStateType {
 
 const tableToolbarStateDefault = {
   tableToolbarState: {
-    currentCell: {type: "td", id: "", border: [true, true, true, true], readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}
+    currentCell: {type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}
   },
   updateTableToolbarState: () => {}
 };
@@ -20,7 +20,7 @@ export const TableToolbarState = createContext<TableToolbarStateType>(tableToolb
 export const TableToolbarStateProvider: FC<PropsWithChildren> = ({
   children
 }) => {
-  const [tableToolbarState, setTableToolbarState] = useState<{ currentCell: TableCellElement }>({currentCell: {type: "td", id: "", border: [true, true, true, true], readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}});
+  const [tableToolbarState, setTableToolbarState] = useState<{ currentCell: TableCellElement }>({currentCell: {type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}});
   const updateTableToolbarState = (tableToolbarState: { currentCell: TableCellElement }) => {
     setTableToolbarState(tableToolbarState);
   };

@@ -4,7 +4,7 @@ export const getEmptyCellNode = (): TableCellElement => {
   return {
     type: "td",
     id: "",
-    border: [true, true, true, true],
+    border: { top: true, right: true, bottom: true, left: true },
     readonly: false,
     children: [{ 
       type: "p", 

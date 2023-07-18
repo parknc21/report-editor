@@ -54,12 +54,24 @@ export interface TableCellElement {
   colIndex?: string;
   align?: TextAlign;
   id?: string;
-  border?: boolean[];
+  border?: {
+    top: boolean;
+    right: boolean;
+    bottom: boolean;
+    left: boolean;
+  };
   readonly?: boolean;
   children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement | HeadingElement | TableElement | TableRowElement | TableCellElement;
+export interface ImageAreaElement {
+  type: 'img-area';
+  id?: string;
+  align?: TextAlign;
+  children: CustomText[];
+};
+
+export type CustomElement = ParagraphElement | HeadingElement | TableElement | TableRowElement | TableCellElement | ImageAreaElement;
 
 declare module 'slate' {
   interface CustomTypes {

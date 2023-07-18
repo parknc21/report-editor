@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import BorderAllIcon from '@mui/icons-material/BorderAll';
 import ConfigTableDialog from "./Table/components/ConfigTableDialog";
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import ConfigImageAreaDialog from "./Image/components/ConfigImageAreaDialog";
 
 const Item = styled(Paper)(() => ({
   borderRadius: 0,
@@ -19,12 +20,16 @@ const Item = styled(Paper)(() => ({
 }));
 
 const ElementList: FC = () => {
-  const [ configTableDialogOpen, setConfigTableDialogOpen ] = useState<boolean>(false);
+  const [configTableDialogOpen, setConfigTableDialogOpen] = useState<boolean>(false);
+  const [configImageAreaDialogOpen, setConfigImageAreaDialogOpen] = useState<boolean>(false);
   const ControlConfigTableDialogOpen = () => {
     setConfigTableDialogOpen(true);
   };
   const closeTableDialog = () => {
     setConfigTableDialogOpen(false);
+  };
+  const ControlConfigImageAreaDialogOpen = () => {
+    setConfigImageAreaDialogOpen(!configImageAreaDialogOpen);
   };
   return (
     <>
@@ -41,13 +46,17 @@ const ElementList: FC = () => {
         <Item elevation={0} onClick={ControlConfigTableDialogOpen}>
           <BorderAllIcon />表格
         </Item>
-        <Item elevation={0} onClick={ControlConfigTableDialogOpen}>
-          <InsertPhotoOutlinedIcon />图像
+        <Item elevation={0} onClick={ControlConfigImageAreaDialogOpen}>
+          <InsertPhotoOutlinedIcon />图片域
         </Item>
       </Box>
       <ConfigTableDialog 
         open={configTableDialogOpen}
-        onClose={closeTableDialog}
+        handleClose={closeTableDialog}
+      />
+      <ConfigImageAreaDialog 
+        open={configImageAreaDialogOpen}
+        handleClose={ControlConfigImageAreaDialogOpen}
       />
     </>
   )

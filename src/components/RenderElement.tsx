@@ -58,6 +58,10 @@ export const SlateElement = ({ attributes, children, element }: RenderElementPro
           {children}
         </TableCell>
       )
+    case 'img-area':
+      return (
+        <div>图像</div>
+      )
     default: {
       return (
         <p style={style} {...attributes}>
