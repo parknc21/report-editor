@@ -2,6 +2,7 @@ import { Box, Paper, styled } from "@mui/material";
 import { FC, useState } from "react";
 import BorderAllIcon from '@mui/icons-material/BorderAll';
 import ConfigTableDialog from "./Table/components/ConfigTableDialog";
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 const Item = styled(Paper)(() => ({
   borderRadius: 0,
@@ -22,7 +23,7 @@ const ElementList: FC = () => {
   const ControlConfigTableDialogOpen = () => {
     setConfigTableDialogOpen(true);
   };
-  const closeDialog = () => {
+  const closeTableDialog = () => {
     setConfigTableDialogOpen(false);
   };
   return (
@@ -40,10 +41,13 @@ const ElementList: FC = () => {
         <Item elevation={0} onClick={ControlConfigTableDialogOpen}>
           <BorderAllIcon />表格
         </Item>
+        <Item elevation={0} onClick={ControlConfigTableDialogOpen}>
+          <InsertPhotoOutlinedIcon />图像
+        </Item>
       </Box>
       <ConfigTableDialog 
         open={configTableDialogOpen}
-        onClose={closeDialog}
+        onClose={closeTableDialog}
       />
     </>
   )

@@ -1,6 +1,5 @@
 import { Stack } from "@mui/material";
 import { FC, useContext } from "react";
-import EditableButton from "./EditableButton";
 import { TableToolbarState, TableToolbarStateType } from "../../../../core/providers/TableToolbarStateProvider";
 import SettingButton from "./SettingButton";
 
@@ -18,10 +17,9 @@ const TableToolbar: FC = () => {
         top: "-28px"
       }}
     >
-      <EditableButton 
+      <SettingButton 
         currentCell={tableToolbarState.currentCell}
       />
-      <SettingButton />
     </Stack>
   )
 };
