@@ -38,6 +38,7 @@ const TableCell: FC<TableElementModel> = ({
         border-collapse: collapse;
         position: relative;
         height: 100%;
+        /* background: rgb(244, 244, 245); */
       `}
       onClick={() => {
         const selection = editor.selection;

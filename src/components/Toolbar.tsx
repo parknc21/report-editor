@@ -13,8 +13,19 @@ import HighlightColor from "./HighlightColor";
 import { FormatAlignCenter, FormatAlignJustify, FormatAlignLeft, FormatAlignRight, FormatListBulleted, FormatListNumbered } from "@mui/icons-material";
 import BlockButton from "./BlockButton";
 import InsertElementButton from "./InsertElementButton";
+import { Editor, Path } from "slate";
+import { useSlate } from "slate-react";
+import { getCurrentCellNode } from "./Table/utils/getCurrentCellNode";
 
-const Toolbar: FC = () => {  
+const Toolbar: FC = () => {
+  const editor: Editor = useSlate();
+  const onclick = () => {
+    const path =  editor.selection;
+    if(!path) return;
+    console.log(getCurrentCellNode(editor, path?.focus.path));
+    console.log(path)
+    console.log(Path.next(path?.focus.path))
+  };
   return (
     <Box
       sx={{
@@ -52,6 +63,7 @@ const Toolbar: FC = () => {
       <BlockButton format="numbered-list" tooltip="编号列表" icon={<FormatListNumbered />}/>
       <Divider orientation="vertical" variant="middle" flexItem/>
       <InsertElementButton />
+      <button onClick={onclick}>测试</button>
     </Box>
   )
 };
