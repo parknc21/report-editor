@@ -9,6 +9,7 @@ import { useSlate } from "slate-react";
 import { getCurrentCellNode } from "../utils/getCurrentCellNode";
 import { TableToolbarState, TableToolbarStateType } from "../../../core/providers/TableToolbarStateProvider";
 import { TableCellElement } from "../../../core/models/CustomEditor";
+import { TableCellSettingContext, TableCellSettingContextModel } from "../../../core/providers/TableCellSettingProvider";
 
 const TableCell: FC<TableElementModel> = ({ 
   attributes, 
@@ -20,7 +21,8 @@ const TableCell: FC<TableElementModel> = ({
   const { tableState } = useContext(TableStateContext);
   const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
   const [currentCell, setCurrentCell] = useState<TableCellElement>({type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]});
-  
+  const { tableCellSettingState } = useContext<TableCellSettingContextModel>(TableCellSettingContext);
+
   useEffect(() => {
     const dom = document.getElementById(`table${tableState.tableIndex}-cell`);
     if(dom && currentCell.readonly) {
@@ -33,13 +35,14 @@ const TableCell: FC<TableElementModel> = ({
     <td
       id={`table${tableState.tableIndex}-cell`}
       {...attributes}
-      css={css`
-        border: 1px solid #000;
-        border-collapse: collapse;
-        position: relative;
-        height: 100%;
-        /* background: rgb(244, 244, 245); */
-      `}
+      style={{
+        borderTop: `${tableCellSettingState.borderState.top? "1px solid #000" : "none"}`,
+        borderRight: `${tableCellSettingState.borderState.right? "1px solid #000" : "none"}`,
+        borderBottom: `${tableCellSettingState.borderState.bottom? "1px solid #000" : "none"}`,
+        borderLeft: `${tableCellSettingState.borderState.left? "1px solid #000" : "none"}`,
+        position: "relative",
+        height: "100%"
+      }}
       onClick={() => {
         const selection = editor.selection;
         const cell = getCurrentCellNode(editor, selection?.anchor.path?? []) as any as TableCellElement;

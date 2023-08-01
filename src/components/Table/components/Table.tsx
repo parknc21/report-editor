@@ -41,8 +41,7 @@ const Table: FC<PropsWithChildren<TableElementModel>> = ({
         {...attributes}
         id={`table${tableState.tableIndex}`}
         css={css`
-          border: 1px solid #000;
-          border-spacing: 0;
+          border-collapse: collapse;
           height: 1px;
           width: 100%;
           margin: 0 auto;

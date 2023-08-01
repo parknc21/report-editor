@@ -15,16 +15,22 @@ import BlockButton from "./BlockButton";
 import InsertElementButton from "./InsertElementButton";
 import { Editor, Path } from "slate";
 import { useSlate } from "slate-react";
+import { getFocusTdColIndex, getFocusTdRowIndex } from "./Table/utils/getFocusTdIndex";
 import { getCurrentCellNode } from "./Table/utils/getCurrentCellNode";
+import { getSelectCellNode } from "./Table/utils/getSelectCellNode";
 
 const Toolbar: FC = () => {
   const editor: Editor = useSlate();
   const onclick = () => {
     const path =  editor.selection;
     if(!path) return;
-    console.log(getCurrentCellNode(editor, path?.focus.path));
-    console.log(path)
-    console.log(Path.next(path?.focus.path))
+    const rowIndex = getFocusTdRowIndex(path.focus.path);
+    const colIndex = getFocusTdColIndex(path.focus.path);
+    const tablePath = Path.parent(Path.parent(Path.parent(Path.parent(path.focus.path))));
+    const currentCell = getCurrentCellNode(editor, path.focus.path);
+    const selectCell = getSelectCellNode(rowIndex, colIndex, tablePath);
+    Editor.node(editor, selectCell[0])
+    console.log(Editor.node(editor, selectCell[0])[0] as any as Element)
   };
   return (
     <Box
