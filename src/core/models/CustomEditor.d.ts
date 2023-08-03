@@ -61,6 +61,8 @@ export interface TableCellElement {
     left: boolean;
   };
   readonly?: boolean;
+  rowspan?: string;
+  colspan?: string;
   children: CustomText[];
 };
 

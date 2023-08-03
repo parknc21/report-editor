@@ -47,7 +47,7 @@ export interface TableElementModel {
   colIndex?: number,
   element?: TableCellElement,
   width?: number,
-  children: any
+  children: any,
 };
 
 export interface ImageAreaElementModel {

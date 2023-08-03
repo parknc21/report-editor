@@ -16,7 +16,6 @@ import InsertElementButton from "./InsertElementButton";
 import { Editor, Path } from "slate";
 import { useSlate } from "slate-react";
 import { getFocusTdColIndex, getFocusTdRowIndex } from "./Table/utils/getFocusTdIndex";
-import { getCurrentCellNode } from "./Table/utils/getCurrentCellNode";
 import { getSelectCellNode } from "./Table/utils/getSelectCellNode";
 
 const Toolbar: FC = () => {
@@ -27,7 +26,6 @@ const Toolbar: FC = () => {
     const rowIndex = getFocusTdRowIndex(path.focus.path);
     const colIndex = getFocusTdColIndex(path.focus.path);
     const tablePath = Path.parent(Path.parent(Path.parent(Path.parent(path.focus.path))));
-    const currentCell = getCurrentCellNode(editor, path.focus.path);
     const selectCell = getSelectCellNode(rowIndex, colIndex, tablePath);
     Editor.node(editor, selectCell[0])
     console.log(Editor.node(editor, selectCell[0])[0] as any as Element)
