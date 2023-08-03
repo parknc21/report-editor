@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import TableCellResizableWrapper from "./TableCellResizableWrapper";
 import { TableElementModel } from "../../../core/models/EditorModels";
 import { TableStateContext } from "../../../core/providers/TableStateProvider";
-import { Editor } from "slate";
+import { Editor, Node } from "slate";
 import { useSlate } from "slate-react";
 import { getCurrentCellNode } from "../utils/getCurrentCellNode";
 import { TableToolbarState, TableToolbarStateType } from "../../../core/providers/TableToolbarStateProvider";
@@ -36,10 +36,10 @@ const TableCell: FC<TableElementModel> = ({
       id={`table${tableState.tableIndex}-cell`}
       {...attributes}
       style={{
-        borderTop: `${tableCellSettingState.borderState.top? "1px solid #000" : "none"}`,
-        borderRight: `${tableCellSettingState.borderState.right? "1px solid #000" : "none"}`,
-        borderBottom: `${tableCellSettingState.borderState.bottom? "1px solid #000" : "none"}`,
-        borderLeft: `${tableCellSettingState.borderState.left? "1px solid #000" : "none"}`,
+        borderTop: `${element?.border?.top? "1px solid #000" : "none"}`,
+        borderRight: `${element?.border?.right? "1px solid #000" : "none"}`,
+        borderBottom: `${element?.border?.bottom? "1px solid #000" : "none"}`,
+        borderLeft: `${element?.border?.left? "1px solid #000" : "none"}`,
         position: "relative",
         height: "100%"
       }}

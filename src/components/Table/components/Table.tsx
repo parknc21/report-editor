@@ -10,7 +10,7 @@ import { ElementInfoContext, ElementInfoContextType } from "../../../core/provid
 
 const Table: FC<PropsWithChildren<TableElementModel>> = ({
   attributes,
-  children 
+  children
 }) => {
   const { tableState } = useContext<TableStateContextModel>(TableStateContext);
   const { elementInfoState } = useContext<ElementInfoContextType>(ElementInfoContext);

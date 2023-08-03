@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
 import { Element } from "slate";
+import { TableCellElement } from "./CustomEditor";
 
 export interface ToolbarButtonModel {
   format: string,
@@ -23,6 +24,18 @@ export interface HeadingTitleModel {
   tooltip: string
 };
 
+export interface RenderElementProps {
+  children: any;
+  element: Element;
+  attributes: {
+      'data-slate-node': 'element';
+      'data-slate-inline'?: true;
+      'data-slate-void'?: true;
+      dir?: 'rtl';
+      ref: any;
+  };
+}
+
 export interface TableElementModel {
   attributes: {
     'data-slate-node': 'element';
@@ -32,7 +45,7 @@ export interface TableElementModel {
     ref: any;
   },
   colIndex?: number,
-  element?: Element,
+  element?: TableCellElement,
   width?: number,
   children: any
 };

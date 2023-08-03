@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { Editor } from "slate";
-import { ReactEditor, RenderElementProps, useSlate } from "slate-react";
+import { ReactEditor, useSlate } from "slate-react";
 import { css } from '@emotion/react';
 import Table from "./Table/components/Table";
 import TableRow from "./Table/components/TableRow";
 import TableCell from "./Table/components/TableCell";
+import { RenderElementProps } from "../core/models/EditorModels";
 
 export const SlateElement = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
   const editor: Editor = useSlate();
