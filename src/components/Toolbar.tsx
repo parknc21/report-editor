@@ -28,7 +28,7 @@ const Toolbar: FC = () => {
     const tablePath = Path.parent(Path.parent(Path.parent(Path.parent(path.focus.path))));
     const selectCell = getSelectCellNode(rowIndex, colIndex, tablePath);
     Editor.node(editor, selectCell[0])
-    console.log(Editor.node(editor, selectCell[0])[0] as any as Element)
+    // console.log(Editor.node(editor, selectCell[0])[0] as any as Element)
   };
   return (
     <Box

@@ -20,6 +20,13 @@ const TableCell: FC<TableElementModel> = ({
   const { tableState } = useContext(TableStateContext);
   const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
 
+//   const debounce = (func, wait) => {
+//     let timer
+//     return () => {
+//     clearTimeout(timer)
+//         timer = setTimeout(func, wait);
+//     }
+// }
   return (
     <td
       id={`table${tableState.tableIndex}-cell`}
@@ -33,12 +40,30 @@ const TableCell: FC<TableElementModel> = ({
         borderBottom: `${element?.border?.bottom? "1px solid #000" : "none"}`,
         borderLeft: `${element?.border?.left? "1px solid #000" : "none"}`,
         position: "relative",
-        height: "100%"
+        height: "100%",
       }}
       onClick={() => {
         const selection = editor.selection;
         const cell = getCurrentCellNode(editor, selection?.anchor.path?? []) as any as TableCellElement;
         updateTableToolbarState({ currentCell: cell });
+      }}
+      onMouseDown={(e) => {
+        
+        window.onmousemove = () => {
+          const path =  editor.selection;
+          let selObj = window.getSelection();
+          if(path?.anchor.path !== path?.focus.path) {
+            selObj?.removeAllRanges();
+          };
+        };
+      }}
+      onMouseUp={() => {
+        // const path =  editor.selection;
+        // let selObj = window.getSelection();
+        // if(path?.anchor.path !== path?.focus.path) {
+        //   selObj?.removeAllRanges();
+        // };
+        window.onmousemove = null;
       }}
     >
       <div
