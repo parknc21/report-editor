@@ -20,13 +20,21 @@ const TableCell: FC<TableElementModel> = ({
   const { tableState } = useContext(TableStateContext);
   const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
 
-//   const debounce = (func, wait) => {
-//     let timer
-//     return () => {
-//     clearTimeout(timer)
-//         timer = setTimeout(func, wait);
-//     }
-// }
+  const getMouseSelection = () => {
+    window.onmousemove = () => {
+      let selObj = window.getSelection && window.getSelection();
+      if(selObj && selObj.rangeCount > 0) {
+        if(selObj?.getRangeAt(0).commonAncestorContainer.hasChildNodes()) {
+          selObj?.removeAllRanges();
+        };
+      };
+    };
+    window.onmouseup = () => {
+      const path = editor.selection;
+      console.log(path)
+      window.onmousemove = null;
+    };
+  };
   return (
     <td
       id={`table${tableState.tableIndex}-cell`}
@@ -46,25 +54,7 @@ const TableCell: FC<TableElementModel> = ({
         const selection = editor.selection;
         const cell = getCurrentCellNode(editor, selection?.anchor.path?? []) as any as TableCellElement;
         updateTableToolbarState({ currentCell: cell });
-      }}
-      onMouseDown={(e) => {
-        
-        window.onmousemove = () => {
-          const path =  editor.selection;
-          let selObj = window.getSelection();
-          if(path?.anchor.path !== path?.focus.path) {
-            selObj?.removeAllRanges();
-          };
-        };
-      }}
-      onMouseUp={() => {
-        // const path =  editor.selection;
-        // let selObj = window.getSelection();
-        // if(path?.anchor.path !== path?.focus.path) {
-        //   selObj?.removeAllRanges();
-        // };
-        window.onmousemove = null;
-      }}
+      }} 
     >
       <div
         css={css`
@@ -72,6 +62,7 @@ const TableCell: FC<TableElementModel> = ({
           height: 100%;
           z-index: 20;
         `}
+        onMouseDown={getMouseSelection}
       >
         {children}
       </div>

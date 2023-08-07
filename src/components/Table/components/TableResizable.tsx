@@ -31,13 +31,13 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
     const table = dom.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
     const td = dom.parentElement?.parentElement;
     if(!table || !td) return;
-    const currentOffsetX = event.clientX;
+    const currentOffsetX = event.pageX;
     const colNode = table.querySelector("colgroup")?.childNodes[Number(colIndex)] as HTMLElement;
     const nextColNode = table.querySelector("colgroup")?.childNodes[Number(colIndex) + 1] as HTMLElement;
     const initialWidth = td? td.offsetWidth : 0;
     window.onmousemove = (e) => {
-      const delta = currentOffsetX - e.clientX;
-      const deltaWidth = initialWidth - delta;
+      const delta = e.pageX - currentOffsetX;
+      const deltaWidth = initialWidth + delta;
       colNode.setAttribute("style", `min-width: 48px; width: ${deltaWidth}px`);
       nextColNode.setAttribute("style", `min-width: 48px; width: ${colNode.offsetWidth + nextColNode.offsetWidth - deltaWidth}px`);
       const path: Path = ReactEditor.findPath(editor, element);
@@ -75,7 +75,7 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
         `display: block; 
         position: absolute; 
         z-index: 30; 
-        width: 0.25rem; 
+        width: 3px; 
         opacity: 1; 
         background: rgb(59, 130, 246); 
         top: -12px; 

@@ -28,6 +28,7 @@ const TableResizableHandle: FC<TableResizableHandleProp> = ({
   const size = isHorizontal? "width" : "height";
   return (
     <div
+      id={`resizable-${direction}`}
       style={{
         position: "absolute",
         zIndex,
