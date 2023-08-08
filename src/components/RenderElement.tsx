@@ -55,7 +55,7 @@ export const SlateElement = ({ attributes, children, element }: RenderElementPro
       )
     case 'td':
       return (
-        <TableCell attributes={attributes} element={element} colIndex={ReactEditor.findPath(editor as any, element)[2]}>
+        <TableCell attributes={attributes} element={element} rowIndex={ReactEditor.findPath(editor as any, element)[1]} colIndex={ReactEditor.findPath(editor as any, element)[2]}>
           {children}
         </TableCell>
       )

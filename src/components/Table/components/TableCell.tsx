@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { css } from '@emotion/react';
 import TableCellResizableWrapper from "./TableCellResizableWrapper";
 import { TableElementModel } from "../../../core/models/EditorModels";
@@ -14,30 +14,31 @@ const TableCell: FC<TableElementModel> = ({
   attributes, 
   children,
   colIndex,
+  rowIndex,
   element
 }) => {
   const editor: Editor = useSlate();
   const { tableState } = useContext(TableStateContext);
   const { updateTableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
+  const [mouseDown, setMouseDown] = useState<boolean>(false);
 
-  const getMouseSelection = () => {
-    window.onmousemove = () => {
-      let selObj = window.getSelection && window.getSelection();
-      if(selObj && selObj.rangeCount > 0) {
-        if(selObj?.getRangeAt(0).commonAncestorContainer.hasChildNodes()) {
-          selObj?.removeAllRanges();
-        };
-      };
-    };
-    window.onmouseup = () => {
-      const path = editor.selection;
-      console.log(path)
-      window.onmousemove = null;
-    };
-  };
+  // const getMouseSelection = () => {
+  //   window.onmousemove = () => {
+  //     let selObj = window.getSelection && window.getSelection();
+  //     if(selObj && selObj.rangeCount > 0) {
+  //       if(selObj?.getRangeAt(0).commonAncestorContainer.hasChildNodes()) {
+  //         selObj?.removeAllRanges();
+  //       };
+  //     };
+  //   };
+  //   window.onmouseup = () => {
+  //     window.onmousemove = null;
+  //   };
+  // };
+
   return (
     <td
-      id={`table${tableState.tableIndex}-cell`}
+      id={`table${tableState.tableIndex}-${rowIndex}-${colIndex}`}
       rowSpan={element?.rowspan? Number(element?.rowspan) : undefined}
       colSpan={element?.colspan? Number(element?.colspan) : undefined}
       {...attributes}
@@ -54,7 +55,7 @@ const TableCell: FC<TableElementModel> = ({
         const selection = editor.selection;
         const cell = getCurrentCellNode(editor, selection?.anchor.path?? []) as any as TableCellElement;
         updateTableToolbarState({ currentCell: cell });
-      }} 
+      }}
     >
       <div
         css={css`
@@ -62,7 +63,25 @@ const TableCell: FC<TableElementModel> = ({
           height: 100%;
           z-index: 20;
         `}
-        onMouseDown={getMouseSelection}
+        onMouseDown={() => {
+          setMouseDown(true);
+        }}
+        onMouseOver={() => {
+          let selObj = window.getSelection && window.getSelection();
+          if(selObj && selObj.rangeCount > 0) {
+            if(selObj?.getRangeAt(0).commonAncestorContainer.hasChildNodes()) {
+              selObj?.removeAllRanges();
+            };
+          };
+          if(mouseDown) {
+            const path = editor.selection;
+            const cell = getCurrentCellNode(editor, path?.focus.path?? []) as any as TableCellElement;
+            console.log(path)
+          };
+        }}
+        onMouseUp={() => {
+          setMouseDown(false);
+        }}
       >
         {children}
       </div>

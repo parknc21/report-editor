@@ -10,6 +10,8 @@ interface TableCellResizableWrapperProp {
 };
 const TableCellResizableWrapper: FC<TableCellResizableWrapperProp> = (props: TableCellResizableWrapperProp) => {
   const { colIndex, element } = props;
+
+  
   return (
     <div
       id={colIndex?.toString()}
