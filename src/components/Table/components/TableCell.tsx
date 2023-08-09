@@ -35,7 +35,6 @@ const TableCell: FC<TableElementModel> = ({
   //     window.onmousemove = null;
   //   };
   // };
-
   return (
     <td
       id={`table${tableState.tableIndex}-${rowIndex}-${colIndex}`}
@@ -63,25 +62,6 @@ const TableCell: FC<TableElementModel> = ({
           height: 100%;
           z-index: 20;
         `}
-        onMouseDown={() => {
-          setMouseDown(true);
-        }}
-        onMouseOver={() => {
-          let selObj = window.getSelection && window.getSelection();
-          if(selObj && selObj.rangeCount > 0) {
-            if(selObj?.getRangeAt(0).commonAncestorContainer.hasChildNodes()) {
-              selObj?.removeAllRanges();
-            };
-          };
-          if(mouseDown) {
-            const path = editor.selection;
-            const cell = getCurrentCellNode(editor, path?.focus.path?? []) as any as TableCellElement;
-            console.log(path)
-          };
-        }}
-        onMouseUp={() => {
-          setMouseDown(false);
-        }}
       >
         {children}
       </div>

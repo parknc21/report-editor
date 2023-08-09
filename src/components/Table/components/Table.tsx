@@ -30,6 +30,7 @@ const Table: FC<PropsWithChildren<TableElementModel>> = ({
       { match: n => Element.isElement(n) && n.type === "table" }
     );
   }, [tableState.tableIndex, tableState.tableRowsAndColumns.colCount, editor]);
+
   return (
     <div
       css={css`
