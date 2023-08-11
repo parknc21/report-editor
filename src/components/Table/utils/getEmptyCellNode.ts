@@ -8,6 +8,7 @@ export const getEmptyCellNode = (): TableCellElement => {
     readonly: false,
     rowspan: undefined,
     colspan: undefined,
+    selected: false,
     children: [{ 
       type: "p", 
       children: [{ text: "" }]
