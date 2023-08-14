@@ -1,8 +1,9 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, TextField, Typography } from "@mui/material";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
 import { insertImageArea } from "../transforms/insertImageArea";
+import { ToolbarStateContext, ToolbarStateContextType } from "../../../core/providers/ToolbarStateProvider";
 
 interface ConfigImageAreaDialogProps {
   open: boolean;
@@ -14,8 +15,11 @@ const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
   handleClose
 }) => {
   const editor: Editor = useSlate();
+  const { updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
+  
   const handleConfirm = () => {
     insertImageArea({ editor });
+    updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
     handleClose();
   };
   return (

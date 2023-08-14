@@ -1,16 +1,20 @@
 import { FC, PropsWithChildren, createContext, useState } from "react";
 import { TableCellElement } from "../models/CustomEditor";
 
-export interface TableToolbarStateType {
-  tableToolbarState: {
-    currentCell: TableCellElement
-  };
-  updateTableToolbarState: (tableToolbarState: { currentCell: TableCellElement }) => void;
+interface TableToolbarStateModel {
+  currentCell?: TableCellElement;
+  selectedPathEntry?: number[][];
 };
 
-const tableToolbarStateDefault = {
+export interface TableToolbarStateType {
+  tableToolbarState: TableToolbarStateModel;
+  updateTableToolbarState: (tableToolbarState: TableToolbarStateModel) => void;
+};
+
+export const tableToolbarStateDefault = {
   tableToolbarState: {
-    currentCell: {type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}
+    currentCell: {type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]},
+    selectedPathEntry: []
   },
   updateTableToolbarState: () => {}
 };
@@ -20,8 +24,8 @@ export const TableToolbarState = createContext<TableToolbarStateType>(tableToolb
 export const TableToolbarStateProvider: FC<PropsWithChildren> = ({
   children
 }) => {
-  const [tableToolbarState, setTableToolbarState] = useState<{ currentCell: TableCellElement }>({currentCell: {type: "td", id: "", border: { top: true, right: true, bottom: true, left: true }, readonly: false, children: [{ type: "p", children: [{ text: "" }]}]}});
-  const updateTableToolbarState = (tableToolbarState: { currentCell: TableCellElement }) => {
+  const [tableToolbarState, setTableToolbarState] = useState<TableToolbarStateModel>(tableToolbarStateDefault.tableToolbarState);
+  const updateTableToolbarState = (tableToolbarState: TableToolbarStateModel) => {
     setTableToolbarState(tableToolbarState);
   };
   return (

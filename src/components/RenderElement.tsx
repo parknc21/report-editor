@@ -6,6 +6,7 @@ import Table from "./Table/components/Table";
 import TableRow from "./Table/components/TableRow";
 import TableCell from "./Table/components/TableCell";
 import { RenderElementProps } from "../core/models/EditorModels";
+import ImageArea from "./Image/components/ImageArea";
 
 export const SlateElement = ({ attributes, children, element }: RenderElementProps): JSX.Element => {
   const editor: Editor = useSlate();
@@ -61,7 +62,9 @@ export const SlateElement = ({ attributes, children, element }: RenderElementPro
       )
     case 'img-area':
       return (
-        <div>图像</div>
+        <ImageArea attributes={attributes}>
+          {children}
+        </ImageArea>
       )
     default: {
       return (

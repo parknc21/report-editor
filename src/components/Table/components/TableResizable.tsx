@@ -64,12 +64,16 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
     const dom = currentTable?.querySelector("tbody");
     if(!dom) return;
     if(hoveredIndex === undefined) {
+      if(!dom.childNodes) return;
       dom.childNodes.forEach((item: any) => {
+        if(!item.childNodes) return;
         const children = item.childNodes[Number(colIndex)].childNodes[1].childNodes[2] as HTMLElement;
         children.setAttribute("style", "display: none;");
       })
     } else {
+      if(!dom.childNodes) return;
       dom.childNodes.forEach((item: any) => {
+        if(!item.childNodes) return;
         const children = item.childNodes[Number(hoveredIndex)].childNodes[1].childNodes[2] as HTMLElement;
         children.setAttribute("style", 
         `display: block; 

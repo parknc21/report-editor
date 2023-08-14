@@ -1,7 +1,8 @@
 import { Stack } from "@mui/material";
 import { FC, useContext } from "react";
-import { TableToolbarState, TableToolbarStateType } from "../../../../core/providers/TableToolbarStateProvider";
+import { TableToolbarState, TableToolbarStateType, tableToolbarStateDefault } from "../../../../core/providers/TableToolbarStateProvider";
 import SettingButton from "./SettingButton";
+import MergeCellButton from "./MergeCellButton";
 
 const TableToolbar: FC = () => {
   const { tableToolbarState } = useContext<TableToolbarStateType>(TableToolbarState);
@@ -18,8 +19,9 @@ const TableToolbar: FC = () => {
       }}
     >
       <SettingButton 
-        currentCell={tableToolbarState.currentCell}
+        currentCell={tableToolbarState.currentCell?? tableToolbarStateDefault.tableToolbarState.currentCell}
       />
+      <MergeCellButton />
     </Stack>
   )
 };
