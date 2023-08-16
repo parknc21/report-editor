@@ -13,7 +13,7 @@ interface TableResizableHandleProp {
 
 const TableResizableHandle: FC<TableResizableHandleProp> = ({ 
   direction, 
-  width = 10,
+  width = 1,
   startMargin = 0,
   endMargin = 0,
   zIndex = 40,
@@ -32,7 +32,7 @@ const TableResizableHandle: FC<TableResizableHandleProp> = ({
       style={{
         position: "absolute",
         zIndex,
-        [nearSide]: -width/2,
+        [nearSide]: -width,
         [start]: startMargin,
         [end]: endMargin,
         [size]: width,

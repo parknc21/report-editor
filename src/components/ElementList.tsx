@@ -36,7 +36,7 @@ const ElementList: FC = () => {
       <Box
         sx={{
           position: "absolute",
-          zIndex: 1,
+          zIndex: 1000,
           width: "150px",
           background: "#fff",
           marginTop: "10px",

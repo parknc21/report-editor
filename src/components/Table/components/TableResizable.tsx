@@ -1,5 +1,4 @@
-import { FC, useEffect } from "react";
-import { useState } from 'react';
+import { FC } from "react";
 import { ReactEditor, useSlate } from "slate-react";
 import { Editor, Element, Path, Transforms } from "slate";
 import TableResizableHandle from "./TableResizableHandle";
@@ -12,18 +11,18 @@ interface TableCellResizableProp {
 
 const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizableProp) => {
   const { colIndex = "", element } = props;
-  const [ hoveredIndex, setHoveredIndex ] = useState<number>();
-  const [ currentTable, setCurrentTable ] = useState<HTMLElement | null>();
+  // const [ hoveredIndex, setHoveredIndex ] = useState<number>();
+  // const [ currentTable, setCurrentTable ] = useState<HTMLElement | null>();
   const editor: Editor = useSlate();
   
   const onHover = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    setHoveredIndex(Number(colIndex));
-    const dom = event.target as any as HTMLElement;
-    const table = dom.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
-    setCurrentTable(table);
+    // setHoveredIndex(Number(colIndex));
+    // const dom = event.target as any as HTMLElement;
+    // const table = dom.parentElement?.parentElement?.parentElement?.parentElement?.parentElement;
+    // setCurrentTable(table);
   };
   const onHoverEnd = () => {
-    setHoveredIndex(undefined);
+    // setHoveredIndex(undefined);
   };
   //拖拽改变表格宽度
   const onWidthResizable = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -35,6 +34,7 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
     const colNode = table.querySelector("colgroup")?.childNodes[Number(colIndex)] as HTMLElement;
     const nextColNode = table.querySelector("colgroup")?.childNodes[Number(colIndex) + 1] as HTMLElement;
     const initialWidth = td? td.offsetWidth : 0;
+    if(!nextColNode) return;
     window.onmousemove = (e) => {
       const delta = e.pageX - currentOffsetX;
       const deltaWidth = initialWidth + delta;
@@ -60,35 +60,37 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
     };
   };
 
-  useEffect(() => {
-    const dom = currentTable?.querySelector("tbody");
-    if(!dom) return;
-    if(hoveredIndex === undefined) {
-      if(!dom.childNodes) return;
-      dom.childNodes.forEach((item: any) => {
-        if(!item.childNodes) return;
-        const children = item.childNodes[Number(colIndex)].childNodes[1].childNodes[2] as HTMLElement;
-        children.setAttribute("style", "display: none;");
-      })
-    } else {
-      if(!dom.childNodes) return;
-      dom.childNodes.forEach((item: any) => {
-        if(!item.childNodes) return;
-        const children = item.childNodes[Number(hoveredIndex)].childNodes[1].childNodes[2] as HTMLElement;
-        children.setAttribute("style", 
-        `display: block; 
-        position: absolute; 
-        z-index: 30; 
-        width: 3px; 
-        opacity: 1; 
-        background: rgb(59, 130, 246); 
-        top: -12px; 
-        right: -2.5px; 
-        height: calc(100% + 12px)`
-        );
-      })
-    };
-  }, [hoveredIndex, colIndex, currentTable]);
+  // useEffect(() => {
+  //   const dom = currentTable?.querySelector("tbody");
+  //   console.log(dom)
+  //   if(!dom) return;
+  //   if(hoveredIndex === undefined) {
+  //     if(dom.childNodes.length === 0) return;
+  //     dom.childNodes.forEach((item: any) => {
+  //       if(!item.childNodes && !item.childNodes[Number(hoveredIndex)].childNodes[1] && !item.childNodes[Number(hoveredIndex)].childNodes[1].childNodes[2]) return;
+  //       const children = item.childNodes[Number(colIndex)].childNodes[1].childNodes[2] as HTMLElement;
+  //       children.setAttribute("style", "display: none;");
+  //     })
+  //   } else {
+  //     // if(dom.childNodes.length === 0) return;
+      
+  //     // dom.childNodes.forEach((item: any) => {
+  //     //   if(!item.childNodes && !item.childNodes[Number(hoveredIndex)].childNodes[1] && !item.childNodes[Number(hoveredIndex)].childNodes[1].childNodes[2]) return;
+  //     //   const children = item.childNodes[Number(hoveredIndex)].childNodes[1].childNodes[2] as HTMLElement;
+  //     //   children.setAttribute("style", 
+  //     //   `display: block; 
+  //     //   position: absolute; 
+  //     //   z-index: 30; 
+  //     //   width: 3px; 
+  //     //   opacity: 1; 
+  //     //   background: rgb(59, 130, 246); 
+  //     //   top: -12px; 
+  //     //   right: -2.5px; 
+  //     //   height: calc(100% + 12px)`
+  //     //   );
+  //     // })
+  //   };
+  // }, [hoveredIndex, colIndex, currentTable]);
 
   //拖拽修改表格高度
   const onHeightResizable = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
