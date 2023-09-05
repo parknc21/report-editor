@@ -1,22 +1,57 @@
-import { FC, PropsWithChildren } from "react";
+/** @jsxImportSource @emotion/react */
+import { FC, PropsWithChildren, useContext } from "react";
 import { ImageAreaElementModel } from "../../../core/models/EditorModels";
+import { ImageAreaContext, ImageAreaContextModel } from "../../../core/providers/ImageAreaStateProvider";
+import { css } from "@emotion/react";
 
 const ImageArea: FC<PropsWithChildren<ImageAreaElementModel>> = ({
   attributes,
   children
 }) => {
+  const { imageAreaState } = useContext<ImageAreaContextModel>(ImageAreaContext);
   return (
     <div
       {...attributes}
+      contentEditable={false}
+      style={{
+        width: "100%",
+        height: "100%",
+        textAlign: "center"
+      }}
     >
-      <img
-        src="https://picx.zhimg.com/v2-3b4fc7e3a1195a081d0259246c38debc_720w.jpg?source=172ae18b"
-        alt="dolphin"
-        style={{
-          width: "50px",
-          height: "50px"
-        }}
-      />
+      <div
+        css={css`
+          display: flex;
+        `}
+      >
+        <div
+          css={css`
+            height: 50px;
+            width: 3px;
+            background: rgb(161,161,170);
+            margin-right: 10px;
+            border-radius: 10px;
+          `}
+        ></div>
+        <img
+          id={imageAreaState.imageId}
+          src={imageAreaState.imageLink}
+          alt={imageAreaState.imageLabel}
+          style={{
+            width: "50px",
+            height: "50px"
+          }}
+        />
+        <div
+          css={css`
+          height: 50px;
+          width: 3px;
+          background: rgb(161,161,170);
+          margin-left: 10px;
+          border-radius: 10px;
+        `}
+        ></div>
+      </div>
       {children}
     </div>
   )

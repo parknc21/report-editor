@@ -5,6 +5,7 @@ import { ToolbarStateProvider } from "./ToolbarStateProvider";
 import { ElementInfoProvider } from "./ElementInfoProvider";
 import { SlateElementListProvider } from "./SlateElementListProvider";
 import { TableToolbarStateProvider } from "./TableToolbarStateProvider";
+import ImageAreaProvider from "./ImageAreaStateProvider";
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -12,11 +13,13 @@ const Providers: FC<PropsWithChildren> = ({ children }) => {
       <ElementInfoProvider>
         <SlateElementListProvider>
           <TableStateProvider>
-            <ToolbarStateProvider>
-              <TableToolbarStateProvider>
-                {children}
-              </TableToolbarStateProvider>
-            </ToolbarStateProvider>
+            <ImageAreaProvider>
+              <ToolbarStateProvider>
+                <TableToolbarStateProvider>
+                  {children}
+                </TableToolbarStateProvider>
+              </ToolbarStateProvider>
+            </ImageAreaProvider>
           </TableStateProvider>
         </SlateElementListProvider>
       </ElementInfoProvider>

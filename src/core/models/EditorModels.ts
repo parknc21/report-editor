@@ -36,6 +36,15 @@ export interface RenderElementProps {
   };
 }
 
+export interface RenderLeafProps {
+  children: any
+  leaf: Text
+  text: Text
+  attributes: {
+    'data-slate-leaf': true
+  }
+}
+
 export interface TableElementModel {
   attributes: {
     'data-slate-node': 'element';
