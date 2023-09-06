@@ -15,6 +15,8 @@ interface ImageStateModel {
   imageId: string;
   imageLink: string;
   imageLabel: string;
+  imageWidth: string;
+  imageHeight: string;
 };
 
 const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
@@ -24,12 +26,12 @@ const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
   const editor: Editor = useSlate();
   const { updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
   const { updateIamgeAreaState } = useContext<ImageAreaContextModel>(ImageAreaContext);
-  const [imageState, setImageState] = useState<ImageStateModel>({ imageId: "", imageLink: "", imageLabel: "" });
+  const [imageState, setImageState] = useState<ImageStateModel>({ imageId: "", imageLink: "", imageLabel: "", imageWidth: "", imageHeight: "" });
   
   const handleConfirm = () => {
     insertImageArea({ editor });
     updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
-    updateIamgeAreaState({ imageId: imageState.imageId, imageLink: imageState.imageLink, imageLabel: imageState.imageLabel });
+    updateIamgeAreaState({ imageId: imageState.imageId, imageLink: imageState.imageLink, imageLabel: imageState.imageLabel, imageWidth: imageState.imageWidth, imageHeight: imageState.imageHeight });
     handleClose();
   };
   return (
@@ -77,6 +79,28 @@ const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
                 size="small"
                 value={imageState.imageLabel}
                 onChange={e => setImageState({ ...imageState, imageLabel: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="imgWidth"
+                label="图片宽度"
+                variant="outlined"
+                size="small"
+                value={imageState.imageWidth}
+                onChange={e => setImageState({ ...imageState, imageWidth: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="imgHeight"
+                label="图片高度"
+                variant="outlined"
+                size="small"
+                value={imageState.imageHeight}
+                onChange={e => setImageState({ ...imageState, imageHeight: e.target.value })}
               />
             </Grid>
           </Grid>

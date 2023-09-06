@@ -4,6 +4,8 @@ interface ImageStateModel {
   imageId: string;
   imageLink: string;
   imageLabel: string;
+  imageWidth: string;
+  imageHeight: string;
 };
 
 export interface ImageAreaContextModel {
@@ -15,7 +17,9 @@ const defaultImageAreaContextValue = {
   imageAreaState: {
     imageId: "",
     imageLink: "",
-    imageLabel: ""
+    imageLabel: "",
+    imageWidth: "",
+    imageHeight: ""
   },
   updateIamgeAreaState: () => {}
 };
@@ -25,7 +29,7 @@ export const ImageAreaContext = createContext<ImageAreaContextModel>(defaultImag
 const ImageAreaProvider: FC<PropsWithChildren> = ({
   children
 }) => {
-  const [imageAreaState, setImageAreaState] = useState<ImageStateModel>({ imageId: "", imageLink: "", imageLabel: "" });
+  const [imageAreaState, setImageAreaState] = useState<ImageStateModel>({ imageId: "", imageLink: "", imageLabel: "", imageWidth: "", imageHeight: "" });
 
   const updateIamgeAreaState = (state: ImageStateModel) => {
     setImageAreaState(state);
