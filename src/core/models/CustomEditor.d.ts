@@ -33,7 +33,7 @@ export interface ParagraphElement {
 };
 
 export interface TableElement {
-  type: 'table';
+  type: 'table' | string;
   align?: TextAlign;
   id?: string;
   cols?: number[];
@@ -41,11 +41,11 @@ export interface TableElement {
 };
 
 export interface TableRowElement {
-  type: 'tr';
+  type: 'tr' | string;
   rowIndex?: string;
   align?: TextAlign;
   id?: string;
-  height?: number;
+  height?: string;
   children: TableCellElement[];
 };
 
@@ -68,9 +68,13 @@ export interface TableCellElement {
 };
 
 export interface ImageAreaElement {
-  type: 'img-area';
+  type: 'img-area' | string;
   id?: string;
   align?: TextAlign;
+  link?: string;
+  label?: string;
+  width?: string;
+  height?: string;
   children: CustomText[];
 };
 

@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, Grid, TextField, Typography } from "@mui/material";
-import { FC, useContext, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { Editor } from "slate";
 import { useSlate } from "slate-react";
 import { insertImageArea } from "../transforms/insertImageArea";
@@ -9,6 +9,7 @@ import { ImageAreaContext, ImageAreaContextModel } from "../../../core/providers
 interface ConfigImageAreaDialogProps {
   open: boolean;
   handleClose: () => void;
+  imageInfo?: ImageStateModel;
 };
 
 interface ImageStateModel {
@@ -21,7 +22,8 @@ interface ImageStateModel {
 
 const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
   open, 
-  handleClose
+  handleClose,
+  imageInfo
 }) => {
   const editor: Editor = useSlate();
   const { updateToolbarState } = useContext<ToolbarStateContextType>(ToolbarStateContext);
@@ -29,11 +31,23 @@ const ConfigImageAreaDialog: FC<ConfigImageAreaDialogProps> = ({
   const [imageState, setImageState] = useState<ImageStateModel>({ imageId: "", imageLink: "", imageLabel: "", imageWidth: "", imageHeight: "" });
   
   const handleConfirm = () => {
-    insertImageArea({ editor });
+    insertImageArea({ editor, imageId: imageState.imageId, imageLink: imageState.imageLink, imageLabel: imageState.imageLabel, imageWidth: imageState.imageWidth, imageHeight: imageState.imageHeight });
     updateToolbarState({ fontSize: false, color: false, highlight: false, elementList: false });
     updateIamgeAreaState({ imageId: imageState.imageId, imageLink: imageState.imageLink, imageLabel: imageState.imageLabel, imageWidth: imageState.imageWidth, imageHeight: imageState.imageHeight });
     handleClose();
   };
+
+  useEffect(() => {
+    if(imageInfo) {
+      setImageState({ 
+        imageId: imageInfo.imageId, 
+        imageLink: imageInfo.imageLink, 
+        imageLabel: imageInfo.imageLabel, 
+        imageWidth: imageInfo.imageWidth, 
+        imageHeight: imageInfo.imageHeight 
+      });
+    };
+  }, [imageInfo]);
   return (
     <Dialog
       open={open}

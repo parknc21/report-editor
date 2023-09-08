@@ -1,13 +1,23 @@
-import { FC, PropsWithChildren, useContext } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 import { ImageAreaElementModel } from "../../../core/models/EditorModels";
-import { ImageAreaContext, ImageAreaContextModel } from "../../../core/providers/ImageAreaStateProvider";
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import ConfigImageAreaDialog from "./ConfigImageAreaDialog";
+import { Editor } from "slate";
+import { ReactEditor, useSlate } from "slate-react";
+import { ImageAreaElement } from "../../../core/models/CustomEditor";
 
 const ImageArea: FC<PropsWithChildren<ImageAreaElementModel>> = ({
   attributes,
-  children
+  children,
+  element
 }) => {
-  const { imageAreaState } = useContext<ImageAreaContextModel>(ImageAreaContext);
+  const editor: Editor = useSlate();
+  const [settingOpen, setSettingOpen] = useState<boolean>(false);
+  const [selectedNode, setSelectedNode] = useState<ImageAreaElement>({ type: 'img-area', id: "", link: "", label: "", width: "", height: "", children: [{ type: "p", children: [{ text: "" }] }] });
+
+  const handleSettingClose = () => {
+    setSettingOpen(false);
+    setSelectedNode({ type: 'img-area', id: "", link: "", label: "", width: "", height: "", children: [{ type: "p", children: [{ text: "" }] }] });
+  };
 
   return (
     <div
@@ -18,39 +28,34 @@ const ImageArea: FC<PropsWithChildren<ImageAreaElementModel>> = ({
       }}
     >
       <img
-        id={imageAreaState.imageId}
-        src={imageAreaState.imageLink}
-        alt={imageAreaState.imageLabel}
+        id={element?.id}
+        src={element?.link}
+        alt={element?.label}
         style={{
-          width: `${imageAreaState.imageWidth}px`,
-          height: `${imageAreaState.imageHeight}px`,
+          width: `${element?.width}px`,
+          height: `${element?.height}px`,
           cursor: "pointer",
           position: "relative"
         }}
-        onMouseDown={e => {
-          e.preventDefault();
+        onClick={(e) => {
+          const dom = e.target as any as HTMLElement;
+          const element = ReactEditor.toSlateNode(editor, dom) as any as ImageAreaElement;
+          setSelectedNode(element)
+          setSettingOpen(true);
         }}
       />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          position: "absolute",
-          cursor: "pointer",
-          left: "44%",
-          marginTop: "20px",
-          border: "1px solid rgb(236, 236, 236)",
-          boxShadow: "0 4px 6px -1px rgb(236, 236, 236)",
-          color: "#09090B",
-          fontSize: "14px",
-          padding: "0 12px",
-          height: "45px",
-          borderRadius: "10px"
-        }}
-      >
-        <SettingsOutlinedIcon />修改配置
-      </div>
       {children}
+      <ConfigImageAreaDialog
+        open={settingOpen}
+        handleClose={handleSettingClose}
+        imageInfo={{ 
+          imageId: selectedNode.id?? "", 
+          imageLink: selectedNode.link?? "",
+          imageLabel: selectedNode.label?? "",
+          imageWidth: selectedNode.width?? "",
+          imageHeight: selectedNode.height?? "" 
+        }}
+      />
     </div>
   )
 };

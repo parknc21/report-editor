@@ -105,7 +105,7 @@ const TableCellResizable: FC<TableCellResizableProp> = (props: TableCellResizabl
       const path: Path = ReactEditor.findPath(editor, element);
       Transforms.setNodes(
         editor,
-        { height: deltaHeight<21? 21 : deltaHeight },
+        { height: (deltaHeight<21? "21" : deltaHeight).toString() },
         {
           at: Path.parent(path),
           match: n => Element.isElement(n) && n.type === "tr" 

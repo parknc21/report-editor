@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 import { Element } from "slate";
-import { TableCellElement } from "./CustomEditor";
+import { ImageAreaElement, TableCellElement } from "./CustomEditor";
 
 export interface ToolbarButtonModel {
   format: string,
@@ -69,7 +69,7 @@ export interface ImageAreaElementModel {
     ref: any;
   },
   colIndex?: number,
-  element?: Element,
+  element?: ImageAreaElement,
   width?: number,
   children: any
 };

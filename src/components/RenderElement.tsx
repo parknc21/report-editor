@@ -62,7 +62,7 @@ export const SlateElement = ({ attributes, children, element }: RenderElementPro
       )
     case 'img-area':
       return (
-        <ImageArea attributes={attributes}>
+        <ImageArea attributes={attributes} element={element}>
           {children}
         </ImageArea>
       )
